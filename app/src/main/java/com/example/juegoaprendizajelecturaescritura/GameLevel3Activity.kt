@@ -27,8 +27,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,10 +38,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
-class GameLevel1Activity : ComponentActivity() {
-    private val playerInfoActivity1Completed = registerForActivityResult(
+class GameLevel3Activity : ComponentActivity() {
+    private val playerInfoActivity2Completed = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
     }
@@ -49,25 +53,8 @@ class GameLevel1Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GameLevel1()
+            GameLevel3()
         }
-    }
-
-    @Composable
-    fun Bubble(
-        letter: String,
-        onBubblePopped: () -> Unit,
-        bubbleDrawableMap: Map<String, Int>
-    ) {
-        val drawableId = bubbleDrawableMap[letter] ?: error("No drawable found for letter $letter")
-
-        Image(
-            painter = painterResource(id = drawableId),
-            contentDescription = "Bubble $letter",
-            modifier = Modifier
-                .size(60.dp)
-                .clickable { onBubblePopped() }
-        )
     }
 
     @Composable
@@ -110,94 +97,78 @@ class GameLevel1Activity : ComponentActivity() {
         )
     }
 
-
     @Composable
-    fun GameLevel1() {
-        // Lista de burbujas
-        val bubbles = listOf("A", "B", "E", "J", "A")
-
-// Diccionario
-        val soundResources = mapOf(
-            "A" to R.raw.nivel1_1,
-            "B" to R.raw.nivel1_2,
-            "E" to R.raw.nivel1_3,
-            "J" to R.raw.nivel1_4,
-            "A" to R.raw.nivel1_5
-        )
-
-        val bubbleDrawableMap = mapOf(
-            "A" to R.drawable.burbuja_a,
-            "B" to R.drawable.burbuja_b,
-            "E" to R.drawable.burbuja_e,
-            "J" to R.drawable.burbuja_j
-        )
-
-        var poppedBubbles by remember { mutableIntStateOf(0) }
-        var showCompletionDialog by remember { mutableStateOf(false) }
-        var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
-
-// Reproducir el sonido correspondiente cuando se revienta una burbuja
-        val mContext = LocalContext.current
-
+    fun GameLevel3() {
+        var showDialog by remember { mutableStateOf(false) }
+        val context = LocalContext.current
+        // val mediaPlayer = MediaPlayer.create(context, R.raw.aplausos)
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            modifier = Modifier
+                .fillMaxSize()
         ) {
+            // Imagen de fondo
             Image(
-                painter = painterResource(id = R.drawable.bosque_abeja),
+                painter = painterResource(id = R.drawable.fondo_game_3),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
+                contentScale = ContentScale.Crop
             )
-
-            Column(
+            /*Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Mostrar las burbujas en una columna
+                Text(
+                    text = "Nivel 3",
+                    fontSize = 35.sp,
+                    color = Color.Black,
+                    modifier = Modifier.padding(16.dp),
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = "Selecciona la palabra que corresponde a la imagen",
+                    fontSize = 25.sp,
+                    color = Color.Black,
+                    modifier = Modifier.padding(16.dp),
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    contentPadding = PaddingValues(16.dp)
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(bubbles.size) { index ->
-                        Bubble(
-                            letter = bubbles[index],
-                            onBubblePopped = {
-                                mediaPlayer?.release() // Liberar el MediaPlayer anterior si existe
-
-                                // Crear un nuevo MediaPlayer para el sonido actual
-                                mediaPlayer = MediaPlayer.create(mContext, soundResources.getValue(bubbles[index])).apply {
-                                    start()
-                                    setOnCompletionListener {
-                                        release() // Liberar el MediaPlayer cuando el sonido ha terminado
-                                    }
+                    item {
+                        Image(
+                            painter = painterResource(id = R.drawable.casa),
+                            contentDescription = "Casa",
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clickable {
+                                    showDialog = true
+                                    mediaPlayer.start()
                                 }
-                                poppedBubbles++
-
-                                // Cuando se revientan todas las burbujas
-                                if (poppedBubbles == bubbles.size) {
-                                    showCompletionDialog = true
+                        )
+                    }
+                    item {
+                        Image(
+                            painter = painterResource(id = R.drawable.casa),
+                            contentDescription = "Casa",
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clickable {
+                                    showDialog = true
+                                    mediaPlayer.start()
                                 }
-                            },
-                            bubbleDrawableMap = bubbleDrawableMap
                         )
                     }
                 }
-            }
-            if (showCompletionDialog) {
-                LevelCompletionDialog(
-                    onDismissRequest = { showCompletionDialog = false },
-                    onAdvanceClick = {
-                        showCompletionDialog = false
-                        playerInfoActivity1Completed.launch(Intent(this@GameLevel1Activity, PlayerInfoActivity1Completed::class.java))
-                    }
-                )
-            }
+            }*/
         }
     }
 }
+
 
 

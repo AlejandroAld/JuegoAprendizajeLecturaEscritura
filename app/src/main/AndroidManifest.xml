@@ -26,7 +26,9 @@
         <activity android:name=".GetNameActivity" />
         <activity android:name=".PlayerInfoActivity" />
         <activity android:name=".GameLevel1Activity" />
+        <activity android:name=".PlayerInfoActivity1Completed" />
         <activity android:name=".GameLevel2Activity" />
+        <activity android:name=".PlayerInfoActivity2Completed" />
         <activity android:name=".GameLevel3Activity" />
     </application>
 

@@ -26,8 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class PlayerInfoActivity : ComponentActivity() {
+class PlayerInfoActivity1Completed : ComponentActivity() {
     private val getGameLevel1 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+    }
+    private val getGameLevel2 = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
     }
@@ -72,7 +76,7 @@ class PlayerInfoActivity : ComponentActivity() {
                     contentScale = ContentScale.Crop
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.nivel),
+                    painter = painterResource(id = R.drawable.nivel_completado),
                     contentDescription = "",
                     modifier = Modifier
                         // Apply padding only from de bottom
@@ -81,7 +85,7 @@ class PlayerInfoActivity : ComponentActivity() {
                         .align(Alignment.BottomStart)
                         .clickable {
                             // Navega a GetNameActivity
-                            getGameLevel1.launch(Intent(this@PlayerInfoActivity, GameLevel1Activity::class.java))
+                            getGameLevel1.launch(Intent(this@PlayerInfoActivity1Completed, GameLevel1Activity::class.java))
                         }
                 )
 
@@ -93,7 +97,7 @@ class PlayerInfoActivity : ComponentActivity() {
                         .align(Alignment.Center)
                         .clickable {
                             // Navega a GetNameActivity
-                            getGameLevel1.launch(Intent(this@PlayerInfoActivity, GameLevel1Activity::class.java))
+                            getGameLevel2.launch(Intent(this@PlayerInfoActivity1Completed, GameLevel2Activity::class.java))
                         }
                 )
 
@@ -105,7 +109,7 @@ class PlayerInfoActivity : ComponentActivity() {
                         .align(Alignment.TopEnd)
                         .clickable {
                             // Navega a GetNameActivity
-                            getGameLevel1.launch(Intent(this@PlayerInfoActivity, GameLevel1Activity::class.java))
+                            getGameLevel2.launch(Intent(this@PlayerInfoActivity1Completed, GameLevel2Activity::class.java))
                         }
                 )
             }
