@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".GetNameActivity" />
+        <activity android:name=".PlayerInfoActivity" />
+        <activity android:name=".GameLevel1Activity" />
+        <activity android:name=".GameLevel2Activity" />
+        <activity android:name=".GameLevel3Activity" />
     </application>
 
 </manifest>
