@@ -16,7 +16,9 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.JuegoAprendizajeLecturaEscritura">
+            android:theme="@style/Theme.JuegoAprendizajeLecturaEscritura"
+            tools:ignore="ExtraText">
+            android:screenOrientation="portrait"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +32,7 @@
         <activity android:name=".GameLevel2Activity" />
         <activity android:name=".PlayerInfoActivity2Completed" />
         <activity android:name=".GameLevel3Activity" />
+        <activity android:name=".PlayerInfoActivity3Completed" />
     </application>
 
 </manifest>

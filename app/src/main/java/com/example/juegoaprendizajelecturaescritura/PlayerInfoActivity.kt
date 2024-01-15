@@ -45,28 +45,10 @@ class PlayerInfoActivity : ComponentActivity() {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .background(Color.White)
-            ) {
-                Text(
-                    text = "Bienvenido $playerName",
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(8.dp),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-            }
-
-
-            Box(
-                modifier = Modifier
                     .fillMaxSize()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.fondo_niveles),
+                    painter = painterResource(id = R.drawable.fondo_niveles5),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop

@@ -26,12 +26,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class PlayerInfoActivity1Completed : ComponentActivity() {
+class PlayerInfoActivity3Completed : ComponentActivity() {
     private val getGameLevel1 = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
     }
     private val getGameLevel2 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+    }
+    private val getGameLevel3 = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
     }
@@ -67,31 +71,31 @@ class PlayerInfoActivity1Completed : ComponentActivity() {
                         .align(Alignment.BottomStart)
                         .clickable {
                             // Navega a GetNameActivity
-                            getGameLevel1.launch(Intent(this@PlayerInfoActivity1Completed, GameLevel1Activity::class.java))
+                            getGameLevel1.launch(Intent(this@PlayerInfoActivity3Completed, GameLevel1Activity::class.java))
                         }
                 )
 
                 Image(
-                    painter = painterResource(id = R.drawable.nivel),
+                    painter = painterResource(id = R.drawable.nivel_completado),
                     contentDescription = "",
                     modifier = Modifier
                         .size(150.dp)
                         .align(Alignment.Center)
                         .clickable {
                             // Navega a GetNameActivity
-                            getGameLevel2.launch(Intent(this@PlayerInfoActivity1Completed, GameLevel2Activity::class.java))
+                            getGameLevel2.launch(Intent(this@PlayerInfoActivity3Completed, GameLevel2Activity::class.java))
                         }
                 )
 
                 Image(
-                    painter = painterResource(id = R.drawable.nivel),
+                    painter = painterResource(id = R.drawable.nivel_completado),
                     contentDescription = "",
                     modifier = Modifier
                         .size(150.dp)
                         .align(Alignment.TopEnd)
                         .clickable {
                             // Navega a GetNameActivity
-                            getGameLevel2.launch(Intent(this@PlayerInfoActivity1Completed, GameLevel2Activity::class.java))
+                            getGameLevel3.launch(Intent(this@PlayerInfoActivity3Completed, GameLevel3Activity::class.java))
                         }
                 )
             }

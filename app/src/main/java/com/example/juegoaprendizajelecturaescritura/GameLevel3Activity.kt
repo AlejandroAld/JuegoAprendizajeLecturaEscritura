@@ -13,17 +13,24 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 class GameLevel3Activity : ComponentActivity() {
-    private val playerInfoActivity2Completed = registerForActivityResult(
+    private val playerInfoActivity3Completed = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
     }
@@ -100,8 +108,24 @@ class GameLevel3Activity : ComponentActivity() {
     @Composable
     fun GameLevel3() {
         var showDialog by remember { mutableStateOf(false) }
-        val context = LocalContext.current
-        // val mediaPlayer = MediaPlayer.create(context, R.raw.aplausos)
+        val mContext = LocalContext.current
+        var activatedCards by remember { mutableStateOf(0) } // Contador de tarjetas activadas
+        val totalCards = 6 // Total de tarjetas
+
+        val cat = MediaPlayer.create(mContext, R.raw.cat)
+        val dog = MediaPlayer.create(mContext, R.raw.dog)
+        val horse = MediaPlayer.create(mContext, R.raw.horse)
+        val buffalo = MediaPlayer.create(mContext, R.raw.buffalo)
+        val cock = MediaPlayer.create(mContext, R.raw.cock)
+        val goat = MediaPlayer.create(mContext, R.raw.goat)
+        fun handleCardClick(mediaPlayer: MediaPlayer) {
+            mediaPlayer.start()
+            activatedCards++
+            if (activatedCards == totalCards) {
+                showDialog = true
+            }
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -113,59 +137,191 @@ class GameLevel3Activity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            /*Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            Column(
+                modifier = Modifier.padding(10.dp)
             ) {
-                Text(
-                    text = "Nivel 3",
-                    fontSize = 35.sp,
-                    color = Color.Black,
-                    modifier = Modifier.padding(16.dp),
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    text = "Selecciona la palabra que corresponde a la imagen",
-                    fontSize = 25.sp,
-                    color = Color.Black,
-                    modifier = Modifier.padding(16.dp),
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-                LazyColumn(
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    item {
-                        Image(
-                            painter = painterResource(id = R.drawable.casa),
-                            contentDescription = "Casa",
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clickable {
-                                    showDialog = true
-                                    mediaPlayer.start()
-                                }
-                        )
+
+                Row(modifier = Modifier.weight(1f)) {
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable { handleCardClick(cat) }
+                    ) {
+
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.cat),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        }
+
                     }
-                    item {
-                        Image(
-                            painter = painterResource(id = R.drawable.casa),
-                            contentDescription = "Casa",
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clickable {
-                                    showDialog = true
-                                    mediaPlayer.start()
-                                }
-                        )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable { handleCardClick(dog) }
+                    ) {
+
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.dog),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        }
+
                     }
                 }
-            }*/
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(modifier = Modifier.weight(1f)) {
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable { handleCardClick(horse) }
+                    ) {
+
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.horse),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        }
+
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable { handleCardClick(buffalo) }
+                    ) {
+
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.buffalo),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        }
+
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(modifier = Modifier.weight(1f)) {
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable { handleCardClick(cock) }
+                    ) {
+
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.cock),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        }
+
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable { handleCardClick(goat) }
+                    ) {
+
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.goat),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        }
+
+                    }
+                }
+                // Muestra el diálogo cuando showDialog es true
+                if (showDialog) {
+                    LevelCompletionDialog(
+                        onDismissRequest = { showDialog = false },
+                        onAdvanceClick = {
+                            showDialog = false
+                            playerInfoActivity3Completed.launch(
+                                Intent(this@GameLevel3Activity, PlayerInfoActivity3Completed::class.java)
+                            )
+                        }
+                    )
+                }
+            }
         }
     }
 }
